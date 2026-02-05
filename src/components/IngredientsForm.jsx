@@ -1,11 +1,10 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import Alert from "./Alert.jsx";
 import Inputs from "./Inputs.jsx";
 import ListOfIngredients from "./ListOfIngredients.jsx";
 import Submission from "./Submission.jsx";
 
 export default function IngredientsForm(props) {
-    // Initialize ingredients from URL
     const [ingredients, setIngredients] = useState(() => {
         const params = new URLSearchParams(window.location.search);
         const urlIngredients = params.get('ingredients');
@@ -13,19 +12,35 @@ export default function IngredientsForm(props) {
     });
 
     const [alertIngredient, setAlertIngredient] = useState(null);
+    const timeoutRef = useRef(null);
 
-    // Sync ingredients to URL whenever they change
+    // Debounced URL sync
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-
-        if (ingredients.length > 0) {
-            params.set('ingredients', ingredients.join(','));
-        } else {
-            params.delete('ingredients');
+        // Clear previous timeout
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
         }
 
-        const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.replaceState({}, '', newUrl);
+        // Debounce URL updates by 300ms
+        timeoutRef.current = setTimeout(() => {
+            const params = new URLSearchParams(window.location.search);
+
+            if (ingredients.length > 0) {
+                params.set('ingredients', ingredients.join(','));
+            } else {
+                params.delete('ingredients');
+            }
+
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            window.history.replaceState({}, '', newUrl);
+        }, 300);
+
+        // Cleanup
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
     }, [ingredients]);
 
     function addIngredient(input) {
@@ -52,7 +67,6 @@ export default function IngredientsForm(props) {
     return (
         <section id="ingredients-form">
             <form onSubmit={props.handleSubmit} className="flex flex-col gap-6">
-                {/* Hidden inputs for FormData to pick up */}
                 {ingredients.map((ingredient, index) => (
                     <input
                         key={index}

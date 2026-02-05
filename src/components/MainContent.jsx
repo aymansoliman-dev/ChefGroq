@@ -1,11 +1,10 @@
 import IngredientsForm from "./IngredientsForm.jsx";
 import Recipe from "./Recipe.jsx";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 import getRecipeFromGroq from "../ai.js";
 import FormReset from "./FormReset.jsx";
 
 export default function MainContent() {
-    // Initialize recipe from URL if present
     const [recipe, setRecipe] = useState(() => {
         const params = new URLSearchParams(window.location.search);
         const urlRecipe = params.get('recipe');
@@ -21,19 +20,30 @@ export default function MainContent() {
 
     const [loadingRecipe, setLoadingRecipe] = useState(false);
 
-    // Sync recipe to URL whenever it changes
+    // Memoize the serialized recipe to avoid unnecessary stringification
+    const serializedRecipe = useMemo(() => {
+        return recipe ? encodeURIComponent(JSON.stringify(recipe)) : null;
+    }, [recipe]);
+
+    // Only update URL when serialized recipe actually changes
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
 
-        if (recipe) {
-            params.set('recipe', encodeURIComponent(JSON.stringify(recipe)));
+        if (serializedRecipe) {
+            // Check if the URL actually needs updating
+            if (params.get('recipe') !== serializedRecipe) {
+                params.set('recipe', serializedRecipe);
+                const newUrl = `${window.location.pathname}?${params.toString()}`;
+                window.history.replaceState({}, '', newUrl);
+            }
         } else {
-            params.delete('recipe');
+            if (params.has('recipe')) {
+                params.delete('recipe');
+                const newUrl = `${window.location.pathname}?${params.toString()}`;
+                window.history.replaceState({}, '', newUrl);
+            }
         }
-
-        const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.replaceState({}, '', newUrl);
-    }, [recipe]);
+    }, [serializedRecipe]);
 
     function getRecipe(event) {
         event.preventDefault();
