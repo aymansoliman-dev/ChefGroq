@@ -1,6 +1,10 @@
 import ingredientIcon from '../assets/ingredient.svg'
 import removeIngredientIcon from '../assets/remove-ingredient.svg'
 
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/animations/shift-away-subtle.css';
+
 export default function ListOfIngredients(props) {
 
     const ingredientsItems = props.ingredients.map(ingredient =>
@@ -9,7 +13,9 @@ export default function ListOfIngredients(props) {
                 <img src={ingredientIcon} alt={ingredient} width="24"/>
                 <input id={ingredient} name="ingredients[]" value={ingredient} readOnly className="pointer-events-none cursor-text" disabled />
             </label>
-            <button disabled={props.disabled} aria-label={"remove " + ingredient} onClick={() => props.handleRemoveIngredient(ingredient)} className="cursor-pointer disabled:hidden"><img src={removeIngredientIcon} alt="remove ingredient" width="24" className="pointer-events-none" /></button>
+            <Tippy content={"remove " + ingredient} arrow={true} animation="shift-away-subtle" duration={[400, 300]} trigger="mouseenter" placement="left">
+                <button disabled={props.disabled} aria-label={"remove " + ingredient} onClick={() => props.handleRemoveIngredient(ingredient)} className="cursor-pointer disabled:hidden"><img src={removeIngredientIcon} alt="remove ingredient" width="24" className="pointer-events-none" /></button>
+            </Tippy>
         </li>
     )
 
