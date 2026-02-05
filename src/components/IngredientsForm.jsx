@@ -66,7 +66,7 @@ export default function IngredientsForm(props) {
 
     return (
         <section id="ingredients-form">
-            <form onSubmit={props.handleSubmit} className="flex flex-col gap-6">
+            <form onSubmit={props.handleSubmit} className="flex flex-col gap-5">
                 {ingredients.map((ingredient, index) => (
                     <input
                         key={index}

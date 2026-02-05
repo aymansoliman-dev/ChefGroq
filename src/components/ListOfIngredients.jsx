@@ -21,8 +21,16 @@ export default function ListOfIngredients(props) {
 
     return (
         <div id="ingredients">
-            <h2 className="text-lg sm:text-xl font-bold mb-6">Ingredients on table:</h2>
-            <ul className="text-[#475467] sm:text-xl overflow-y-auto">
+            <ul className="text-[#475467] sm:text-xl overflow-y-auto max-h-80 scroll-smooth
+               [&::-webkit-scrollbar]:w-4
+               [&::-webkit-scrollbar-track]:bg-transparent
+               [&::-webkit-scrollbar-thumb]:rounded-full
+               [&::-webkit-scrollbar-thumb]:bg-[#475467]
+               [&::-webkit-scrollbar-thumb]:border-l-8
+               [&::-webkit-scrollbar-thumb]:border-transparent
+               [&::-webkit-scrollbar-thumb]:bg-clip-padding
+               [&::-webkit-scrollbar-thumb:hover]:bg-gray-600
+               [&::-webkit-scrollbar-button]:hidden">
                 {ingredientsItems}
             </ul>
         </div>

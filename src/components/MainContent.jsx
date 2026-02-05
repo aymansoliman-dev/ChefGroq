@@ -59,7 +59,7 @@ export default function MainContent() {
     }
 
     return (
-        <main className="grow flex flex-col gap-8 m-auto pt-[6dvmin] max-w-11/12">
+        <main className="grow flex flex-col gap-4 sm:gap-6 m-auto pt-[4dvmin] max-w-11/12">
             <div className="text-center">
                 <h1 className="text-lg sm:text-xl font-bold mb-6">Make a recipe from your own Ingredients with Chef Groq!</h1>
                 <p className="text-xs sm:text-sm">Chef Groq is an AI-powered recipe generator using Groq API, it helps you decide what to cook using the ingredients you already have.</p>
