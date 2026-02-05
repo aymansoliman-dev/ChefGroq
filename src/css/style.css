@@ -40,7 +40,11 @@ header > div {
     transition: border-color 0.3s ease-in-out;
 
     & img {
-        width: 2.25rem;
+        width: 1.75rem;
+
+        @media (min-width: 64rem) {
+            width: 2.25rem;
+        }
     }
 
     &:hover {
@@ -57,7 +61,8 @@ form #ingredient {
 }
 
 #submission, #form-reset {
-    width: min(64rem, 90dvw);
+    margin-inline: auto;
+    width: min(64rem, 80dvw);
 }
 
 @keyframes fade-in {

@@ -22,10 +22,10 @@ export default function Header() {
                 <div id="logo" className="flex justify-center items-center-safe gap-4">
                     <Tippy className="sm:hidden" content="Chef Groq" arrow={true} animation="shift-away-subtle" duration={[300, 200]} trigger="mouseenter" placement="right">
                         <span>
-                            <img src={chef} alt="Chef" className="w-14 aspect-square"/>
+                            <img src={chef} alt="Chef" className="w-10 sm:w-14 aspect-square"/>
                         </span>
                     </Tippy>
-                    <h1 className="hidden sm:inline text-xl translate-y-1">Chef Groq</h1>
+                    <h1 className="text-sm sm:text-xl translate-y-1">Chef Groq</h1>
                 </div>
                 <div id="social-links" className="flex items-center ">
                     <ul className="flex items-center gap-5">
@@ -34,7 +34,7 @@ export default function Header() {
                                 <Tippy content={name} arrow={true} animation="shift-away-subtle" duration={[300, 200]} trigger="mouseenter">
                                     <span>
                                         <a href={url} target="_blank" rel="noreferrer">
-                                            <img src={icon} alt={name} className="w-7 aspect-square" />
+                                            <img src={icon} alt={name} className="w-5 sm:w-7 aspect-square" />
                                         </a>
                                     </span>
                                 </Tippy>
