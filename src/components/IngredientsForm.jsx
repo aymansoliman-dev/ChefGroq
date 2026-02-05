@@ -1,27 +1,52 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import Alert from "./Alert.jsx";
 import Inputs from "./Inputs.jsx";
 import ListOfIngredients from "./ListOfIngredients.jsx";
 import Submission from "./Submission.jsx";
 
 export default function IngredientsForm(props) {
+    // Initialize ingredients from URL
+    const [ingredients, setIngredients] = useState(() => {
+        const params = new URLSearchParams(window.location.search);
+        const urlIngredients = params.get('ingredients');
+        return urlIngredients ? urlIngredients.split(',').filter(Boolean) : [];
+    });
 
-    const [ingredients, setIngredients] = useState([])
-    const [alertIngredient, setAlertIngredient] = useState(null)
+    const [alertIngredient, setAlertIngredient] = useState(null);
+
+    // Sync ingredients to URL whenever they change
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+
+        if (ingredients.length > 0) {
+            params.set('ingredients', ingredients.join(','));
+        } else {
+            params.delete('ingredients');
+        }
+
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.replaceState({}, '', newUrl);
+    }, [ingredients]);
 
     function addIngredient(input) {
-        input.value = input.value.trim().toLowerCase()
-        ingredients.includes(input.value) ? setAlertIngredient(input.value) : !input.value? input.value = '' : setIngredients([input.value, ...ingredients])
-        input.value = ''
-        input.focus()
+        input.value = input.value.trim().toLowerCase();
+
+        if (ingredients.includes(input.value)) {
+            setAlertIngredient(input.value);
+        } else if (input.value) {
+            setIngredients([input.value, ...ingredients]);
+        }
+
+        input.value = '';
+        input.focus();
     }
 
     function dismissAlert() {
-        setAlertIngredient(null)
+        setAlertIngredient(null);
     }
 
     function removeIngredient(ingredient) {
-        setIngredients(ingredients => ingredients.filter(i => i !== ingredient))
+        setIngredients(ingredients => ingredients.filter(i => i !== ingredient));
     }
 
     return (
@@ -36,11 +61,11 @@ export default function IngredientsForm(props) {
                         value={ingredient}
                     />
                 ))}
-                { alertIngredient                   && <Alert alertIngredient={alertIngredient} handleDismiss={dismissAlert} />                                                             }
-                { !props.isLoading && !props.recipe && <Inputs handleAddIngredient={addIngredient} />                                                                                       }
-                { !!ingredients.length              && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={props.isLoading || props.recipe} /> }
-                { !props.recipe                     && <Submission ingredientsLength={ingredients.length} isLoading={props.isLoading} />                                                    }
+                {alertIngredient && <Alert alertIngredient={alertIngredient} handleDismiss={dismissAlert} />}
+                {!props.isLoading && !props.recipe && <Inputs handleAddIngredient={addIngredient} />}
+                {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={props.isLoading || props.recipe} />}
+                {!props.recipe && <Submission ingredientsLength={ingredients.length} isLoading={props.isLoading} />}
             </form>
         </section>
-    )
+    );
 }
