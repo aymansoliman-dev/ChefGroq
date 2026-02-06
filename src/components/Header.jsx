@@ -1,6 +1,6 @@
 import chef from '../assets/chef.svg'
 import x from '../assets/twitter.svg'
-import linkedin from '../assets/linkedin.png'
+import linkedin from '../assets/linkedin.svg'
 import github from '../assets/github.svg'
 import me from '../assets/ayman.svg'
 
