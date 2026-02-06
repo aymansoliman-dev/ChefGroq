@@ -7,6 +7,7 @@ import me from '../assets/ayman.svg'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away-subtle.css';
+import Sound from "./Sound.jsx";
 
 const socialLinks = [
     { name: "GitHub", url: "https://github.com/aymansoliman-dev", icon: github },
@@ -17,7 +18,7 @@ const socialLinks = [
 
 export default function Header() {
     return (
-        <header className="sticky top-0 z-50 flex justify-center items-center gap-4 py-4 bg-white">
+        <header className="sticky top-0 z-50 flex justify-between items-center gap-4 py-4 bg-white">
             <div className="m-auto flex justify-between">
                 <div id="logo" className="flex justify-center items-center-safe gap-4">
                     <Tippy className="sm:hidden" content="Chef Groq" arrow={true} animation="shift-away-subtle" duration={[300, 200]} trigger="mouseenter" placement="right">
@@ -25,10 +26,11 @@ export default function Header() {
                             <img src={chef} alt="Chef" className="w-10 sm:w-14 aspect-square"/>
                         </span>
                     </Tippy>
-                    <h1 className="text-sm sm:text-xl translate-y-1">Chef Groq</h1>
+                    <h1 className="hidden sm:inline-block text-sm sm:text-xl translate-y-1">Chef Groq</h1>
                 </div>
+                <Sound />
                 <div id="social-links" className="flex items-center ">
-                    <ul className="flex items-center gap-5">
+                    <ul className="flex items-center gap-4 sm:gap-5">
                         { socialLinks.map(({ name, url, icon }) =>
                             <li key={name} id={name}>
                                 <Tippy content={name} arrow={true} animation="shift-away-subtle" duration={[300, 200]} trigger="mouseenter">

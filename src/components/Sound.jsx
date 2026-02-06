@@ -8,15 +8,27 @@ const sound = new Audio(music);
 sound.loop = true;
 
 export default function Sound() {
-    const [soundOn, setSoundOn] = useState(false);
+    const [soundOn, setSoundOn] = useState(() => {
+        const saved = sessionStorage.getItem('chefGroqMusicPlaying');
+        return saved === 'true';
+    });
+
+    const [playBlocked, setPlayBlocked] = useState(false);
     const buttonRef = useRef(null);
 
     useEffect(() => {
         if (soundOn) {
-            sound.play().catch(() => {});
+            sound.play().catch((error) => {
+                // Autoplay was blocked by browser
+                console.log('Autoplay blocked:', error);
+                setPlayBlocked(true);
+            });
         } else {
             sound.pause();
+            setPlayBlocked(false);
         }
+
+        sessionStorage.setItem('chefGroqMusicPlaying', soundOn);
     }, [soundOn]);
 
     useEffect(() => {
@@ -27,9 +39,27 @@ export default function Sound() {
         return () => clearTimeout(timer);
     }, []);
 
+    const handleClick = (e) => {
+        e.preventDefault();
+
+        if (playBlocked) {
+            // User clicked, so browser will allow playback now
+            sound.play().catch(() => {});
+            setPlayBlocked(false);
+        } else {
+            setSoundOn(!soundOn);
+        }
+    };
+
     return (
         <Tippy
-            content={soundOn ? "Mute Music" : "Play Music"}
+            content={
+                playBlocked
+                    ? "Click to resume music"
+                    : soundOn
+                        ? "Mute Music"
+                        : "Play Music"
+            }
             trigger="mouseenter focus"
             arrow
             animation="shift-away-subtle"
@@ -40,13 +70,15 @@ export default function Sound() {
                 type="button"
                 ref={buttonRef}
                 id="music-control"
-                onClick={(e) => { e.preventDefault(); setSoundOn(!soundOn); }}
-                className="z-10 cursor-pointer rounded-b-full border-3 p-0.5"
+                onClick={handleClick}
+                className={`z-10 cursor-pointer rounded-full border-3 p-2 shrink-0 ${
+                    playBlocked ? 'animate-pulse border-yellow-500' : ''
+                }`}
             >
                 <img
-                    src={soundOn ? soundOnSvg : soundOffSVG}
+                    src={soundOn || playBlocked ? soundOnSvg : soundOffSVG}
                     alt="Sound"
-                    className="pointer-events-none w-[8dvmin] max-w-[32px]"
+                    className="pointer-events-none w-6 sm:w-8"
                 />
             </button>
         </Tippy>
