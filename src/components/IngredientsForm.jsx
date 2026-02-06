@@ -75,7 +75,7 @@ export default function IngredientsForm(props) {
                         value={ingredient}
                     />
                 ))}
-                {alertIngredient && <Alert alertIngredient={alertIngredient} handleDismiss={dismissAlert} />}
+                {alertIngredient && <Alert alert={`Oops! You've already put ${alertIngredient} on your table.` } handleDismiss={dismissAlert} />}
                 {!props.isLoading && !props.recipe && <Inputs handleAddIngredient={addIngredient} />}
                 {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={props.isLoading || props.recipe} />}
                 {!props.recipe && <Submission ingredientsLength={ingredients.length} isLoading={props.isLoading} />}

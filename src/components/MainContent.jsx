@@ -3,6 +3,7 @@ import Recipe from "./Recipe.jsx";
 import {useState, useEffect, useMemo} from "react";
 import getRecipeFromGroq from "../ai.js";
 import FormReset from "./FormReset.jsx";
+import Alert from "./Alert.jsx"; // Add this import
 
 export default function MainContent() {
     const [recipe, setRecipe] = useState(() => {
@@ -19,6 +20,7 @@ export default function MainContent() {
     });
 
     const [loadingRecipe, setLoadingRecipe] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(null); // Add state for alert
 
     // Memoize the serialized recipe to avoid unnecessary stringification
     const serializedRecipe = useMemo(() => {
@@ -47,11 +49,22 @@ export default function MainContent() {
 
     function getRecipe(event) {
         event.preventDefault();
-        setLoadingRecipe(true);
         const ingredients = new FormData(event.target).getAll('ingredients[]');
+
+        // Check if there are at least 4 ingredients
+        if (ingredients.length < 4) {
+            setAlertMessage("You shall add at least 4 ingredients!");
+            return;
+        }
+
+        setLoadingRecipe(true);
         getRecipeFromGroq(ingredients)
             .then(recipe => setRecipe(recipe))
             .finally(() => setLoadingRecipe(false));
+    }
+
+    function dismissAlert() {
+        setAlertMessage(null);
     }
 
     function reset() {
@@ -64,6 +77,7 @@ export default function MainContent() {
                 <h1 className="text-lg sm:text-xl font-bold mb-6">Make a recipe from your own Ingredients with Chef Groq!</h1>
                 <p className="text-xs sm:text-sm">Chef Groq is an AI-powered recipe generator using Groq API, it helps you decide what to cook using the ingredients you already have.</p>
             </div>
+            {alertMessage && <Alert alert={alertMessage} handleDismiss={dismissAlert} />}
             <IngredientsForm recipe={recipe} handleSubmit={getRecipe} isLoading={loadingRecipe} />
             {recipe &&
                 <>
