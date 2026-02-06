@@ -47,6 +47,7 @@ export default function MainContent() {
         }
     }, [serializedRecipe]);
 
+    /**/
     function getRecipe(event) {
         event.preventDefault();
         const ingredients = new FormData(event.target).getAll('ingredients[]');
@@ -62,6 +63,7 @@ export default function MainContent() {
             .then(recipe => setRecipe(recipe))
             .finally(() => setLoadingRecipe(false));
     }
+    /**/
 
     function dismissAlert() {
         setAlertMessage(null);
