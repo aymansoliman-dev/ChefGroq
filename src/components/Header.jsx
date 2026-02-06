@@ -11,7 +11,7 @@ import Sound from "./Sound.jsx";
 
 const socialLinks = [
     { name: "GitHub", url: "https://github.com/aymansoliman-dev", icon: github },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/aymansoliman-dev/en/", icon: linkedin },
+    { name: "Linkedin", url: "https://www.linkedin.com/in/aymansoliman-dev/en/", icon: linkedin },
     { name: "X", url: "https://x.com/a_soliman1783", icon: x },
     { name: "Ayman", url: "https://drive.google.com/file/d/1aFNy-k7gMEHSt-UmVW75aXk5Y4x-wEpm/view?usp=sharing", icon: me }
 ]
