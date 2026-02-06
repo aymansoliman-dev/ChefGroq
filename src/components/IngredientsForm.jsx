@@ -4,7 +4,7 @@ import Inputs from "./Inputs.jsx";
 import ListOfIngredients from "./ListOfIngredients.jsx";
 import Submission from "./Submission.jsx";
 
-export default function IngredientsForm(props) {
+export default function IngredientsForm({ handleSubmit, isLoading, recipe = null }) {
     const [ingredients, setIngredients] = useState(() => {
         const params = new URLSearchParams(window.location.search);
         const urlIngredients = params.get('ingredients');
@@ -66,7 +66,7 @@ export default function IngredientsForm(props) {
 
     return (
         <section id="ingredients-form">
-            <form onSubmit={props.handleSubmit} className="flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 {ingredients.map((ingredient, index) => (
                     <input
                         key={index}
@@ -76,9 +76,9 @@ export default function IngredientsForm(props) {
                     />
                 ))}
                 {alertIngredient && <Alert alert={`Oops! You've already put ${alertIngredient} on your table.` } handleDismiss={dismissAlert} />}
-                {!props.isLoading && !props.recipe && <Inputs handleAddIngredient={addIngredient} />}
-                {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={props.isLoading || props.recipe} />}
-                {!props.recipe && <Submission ingredientsLength={ingredients.length} isLoading={props.isLoading} />}
+                {!isLoading && !recipe && <Inputs handleAddIngredient={addIngredient} />}
+                {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={isLoading || recipe} />}
+                {!recipe && <Submission ingredientsLength={ingredients.length} isLoading={isLoading} />}
             </form>
         </section>
     );
