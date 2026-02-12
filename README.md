@@ -85,10 +85,8 @@ dist
 ## <img src="./public/coffee-love.svg" width="32"> Author
 
 **Ayman Soliman**
-- Personal: [bento.me/ayman-soliman](https://bento.me/ayman-soliman)
 - GitHub: [@aymansoliman-dev](https://github.com/aymansoliman-dev)
 - LinkedIn: [@aymansoliman-dev](https://linkedin.com/in/aymansoliman-dev)
-- Portfolio: [aymansoliman-dev](https://aymansoliman-dev.vercel.app)
 - Frontend Mentor: [@aymansoliman-dev](https://www.frontendmentor.io/profile/aymansoliman-dev)
 - X: [a_soliman1783](https://x.com/a_soliman1783)
 ---
