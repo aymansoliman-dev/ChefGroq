@@ -49,7 +49,7 @@ npm install
 npm run dev
 ```
 
-Then open [http://localhost:3001](http://localhost:5173) in your browser.
+Then open [http://localhost:3001](http://localhost:3001) in your browser.
 
 ### 4️⃣ Build for production
 
@@ -85,10 +85,8 @@ dist
 ## <img src="./public/coffee-love.svg" width="32"> Author
 
 **Ayman Soliman**
-- Personal: [bento.me/ayman-soliman](https://bento.me/ayman-soliman)
 - GitHub: [@aymansoliman-dev](https://github.com/aymansoliman-dev)
 - LinkedIn: [@aymansoliman-dev](https://linkedin.com/in/aymansoliman-dev)
-- Portfolio: [aymansoliman-dev](https://aymansoliman-dev.vercel.app)
 - Frontend Mentor: [@aymansoliman-dev](https://www.frontendmentor.io/profile/aymansoliman-dev)
 - X: [a_soliman1783](https://x.com/a_soliman1783)
 ---
