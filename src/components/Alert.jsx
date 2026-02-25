@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import chef from '../assets/chef.svg'
 import removeIngredientIcon from '../assets/remove-ingredient.svg'
 
-export default function Alert({ alert, handleDismiss }) {
+export default function Alert({ alertMessage, handleDismiss }) {
     const dialogRef = useRef(null)
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export default function Alert({ alert, handleDismiss }) {
             </form>
             <div className="flex items-center gap-2">
                 <img src={chef} alt="Chef:" width="64" />
-                <p>{alert}</p>
+                <p>{alertMessage}</p>
             </div>
         </dialog>
     )

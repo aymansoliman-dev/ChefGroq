@@ -79,7 +79,7 @@ export default function MainContent() {
                 <h1 className="sm:text-lg font-bold mb-3">Make a recipe from your own Ingredients with <u>Chef Groq!</u></h1>
                 <p className="text-xs sm:text-sm">Chef Groq is an AI-powered recipe generator using Groq API, it helps you decide what to cook using the ingredients you already have.</p>
             </div>
-            {alertMessage && <Alert alert={alertMessage} handleDismiss={dismissAlert} />}
+            {alertMessage && <Alert alertMessage={alertMessage} handleDismiss={dismissAlert} />}
             <IngredientsForm recipe={recipe} handleSubmit={getRecipe} isLoading={loadingRecipe} />
             {recipe &&
                 <>
