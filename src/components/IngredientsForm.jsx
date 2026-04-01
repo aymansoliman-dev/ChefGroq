@@ -75,7 +75,7 @@ export default function IngredientsForm({ handleSubmit, isLoading, recipe = null
                         value={ingredient}
                     />
                 ))}
-                {alertIngredient && <Alert alert={`Oops! You've already put ${alertIngredient} on your table.` } handleDismiss={dismissAlert} />}
+                {alertIngredient && <Alert alertMessage={`Oops! You've already put ${alertIngredient} on your table.` } handleDismiss={dismissAlert} />}
                 {!isLoading && !recipe && <Inputs handleAddIngredient={addIngredient} />}
                 {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={isLoading || recipe} />}
                 {!recipe && <Submission ingredientsLength={ingredients.length} isLoading={isLoading} />}
