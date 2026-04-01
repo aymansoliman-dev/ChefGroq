@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import soundOnSvg from "../assets/sound-on.svg";
 import soundOffSVG from "../assets/sound-off.svg";
 import music from "../assets/موسيقي تتر الشيف شربيني.mp3";
-import Tippy from "@tippyjs/react";
 
 const sound = new Audio(music);
 sound.loop = true;
@@ -51,36 +50,35 @@ export default function Sound() {
         }
     };
 
+    const label = playBlocked ? "Click to resume music" : soundOn ? "Mute Music" : "Play Music";
+
     return (
-        <Tippy
-            content={
-                playBlocked
-                    ? "Click to resume music"
-                    : soundOn
-                        ? "Mute Music"
-                        : "Play Music"
-            }
-            trigger="mouseenter focus"
-            arrow
-            animation="shift-away-subtle"
-            duration={[300, 200]}
-            placement="top"
+        <button
+            type="button"
+            ref={buttonRef}
+            id="music-control"
+            onClick={handleClick}
+            title={label}
+            aria-label={label}
+            className="win-btn"
+            style={{
+                minWidth: 0,
+                padding: '2px 8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                fontSize: 11,
+                color: playBlocked ? '#c08000' : '#000000',
+            }}
         >
-            <button
-                type="button"
-                ref={buttonRef}
-                id="music-control"
-                onClick={handleClick}
-                className={`z-10 cursor-pointer rounded-full border-3 p-2 shrink-0 ${
-                    playBlocked ? 'animate-pulse border-yellow-500' : ''
-                }`}
-            >
-                <img
-                    src={soundOn || playBlocked ? soundOnSvg : soundOffSVG}
-                    alt="Sound"
-                    className="pointer-events-none w-6 sm:w-8"
-                />
-            </button>
-        </Tippy>
+            <img
+                src={soundOn || playBlocked ? soundOnSvg : soundOffSVG}
+                alt=""
+                className="pointer-events-none"
+                width="14"
+                height="14"
+            />
+            <span>{soundOn ? '♪ Music On' : '♪ Music Off'}</span>
+        </button>
     );
 }

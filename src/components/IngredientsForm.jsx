@@ -66,7 +66,7 @@ export default function IngredientsForm({ handleSubmit, isLoading, recipe = null
 
     return (
         <section id="ingredients-form">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                 {ingredients.map((ingredient, index) => (
                     <input
                         key={index}
@@ -75,9 +75,9 @@ export default function IngredientsForm({ handleSubmit, isLoading, recipe = null
                         value={ingredient}
                     />
                 ))}
-                {alertIngredient && <Alert alertMessage={`Oops! You've already put ${alertIngredient} on your table.` } handleDismiss={dismissAlert} />}
+                {alertIngredient && <Alert alertMessage={`Oops! You've already put ${alertIngredient} on your table.`} handleDismiss={dismissAlert} />}
                 {!isLoading && !recipe && <Inputs handleAddIngredient={addIngredient} />}
-                {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={isLoading || recipe} />}
+                {!!ingredients.length && <ListOfIngredients ingredients={ingredients} handleRemoveIngredient={removeIngredient} disabled={isLoading || !!recipe} />}
                 {!recipe && <Submission ingredientsLength={ingredients.length} isLoading={isLoading} />}
             </form>
         </section>

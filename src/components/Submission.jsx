@@ -1,15 +1,43 @@
 import cooking from '../assets/cooking.gif'
 
 export default function Submission({ ingredientsLength, isLoading }) {
-
-    let submitBtnClassName;
-    if (ingredientsLength < 4) submitBtnClassName = "bg-gray-100 text-[dimgray] cursor-not-allowed shrink-0 px-4 py-2 rounded-md active:scale-[0.98] transition ease-in duration-150 border-2 border-gray-300 sketchy-pill"
-    else submitBtnClassName = "shrink-0 cursor-pointer border-2 border-dashed bg-white text-[#d17557] px-4 py-2 rounded-md active:scale-[0.98] transition ease-in duration-150 sketchy-pill"
+    const ready = ingredientsLength >= 4;
 
     return (
-        <div id="submission" className="fixed bottom-[4dvmin] left-[50%] -translate-x-1/2 flex flex-col sm:flex-row justify-between gap-2 sm:items-center bg-white p-3 sm:p-5 rounded-md border-2 border-dashed border-[#d1d0cc] hover:border-black transition duration-300 text-center sm:text-left text-sm sm:text-lg sketchy">
-            <p className="font-bold sm:text-lg">Ready for a recipe?</p>
-            { isLoading ? <img src={cooking} alt="Cooking..." width="48" className="mx-auto sm:mx-0" /> : <button type="submit" aria-label="Get a recipe" className={submitBtnClassName} >Get a recipe</button> }
+        <div
+            id="submission"
+            className="flex flex-col sm:flex-row justify-between gap-3 sm:items-center p-3"
+            style={{
+                background: '#d4d0c8',
+                borderTop: '1px solid #808080',
+                borderBottom: '1px solid #ffffff',
+                fontFamily: '"Tahoma","MS Sans Serif",sans-serif',
+            }}
+        >
+            <div style={{ fontSize: 11 }}>
+                <p className="font-bold" style={{ marginBottom: 2 }}>Ready for a recipe?</p>
+                <p style={{ color: ready ? '#008000' : '#808080' }}>
+                    {ready
+                        ? `✅ ${ingredientsLength} ingredients ready — click Get Recipe!`
+                        : `⚠️ Add ${4 - ingredientsLength} more ingredient${4 - ingredientsLength !== 1 ? 's' : ''} to continue`}
+                </p>
+            </div>
+            {isLoading ? (
+                <div className="flex items-center gap-2" style={{ fontSize: 11 }}>
+                    <img src={cooking} alt="Cooking..." width="32" />
+                    <span>Generating recipe...</span>
+                </div>
+            ) : (
+                <button
+                    type="submit"
+                    aria-label="Get a recipe"
+                    disabled={!ready}
+                    className="win-btn win-btn-default win-btn-primary"
+                    style={{ minWidth: 110 }}
+                >
+                    🍳 Get Recipe
+                </button>
+            )}
         </div>
     )
 }
