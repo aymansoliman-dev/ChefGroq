@@ -49,30 +49,47 @@ export default function Recipe({ recipe }) {
 
     return (
         <section id="recipe">
-            <article
-                aria-live="polite"
-                className="border-y-2 border-dashed border-[#d1d0cc] pt-6 flex flex-col gap-4
-                           sm:[&>p]:text-lg [&>ol]:list-decimal [&>ol]:list-inside
-                           [&>ul]:list-disc [&>ul]:list-inside transition-all"
-            >
-                <img
-                    src={recipeIcon}
-                    alt="Recipe"
-                    className="w-[12dvmin] mx-auto sm:mx-0"
-                />
-                <ReactMarkdown>{displayedText}</ReactMarkdown>
+            {/* Recipe sub-window */}
+            <div className="win-window">
+                {/* Inner title bar */}
+                <div className="win-title-bar" style={{ background: 'linear-gradient(to right,#006060,#008080)' }}>
+                    <img src={recipeIcon} alt="" width="14" height="14" />
+                    <span className="win-title-bar-text">Recipe Output</span>
+                </div>
 
-                {isFinished && (
-                    <img
-                        src={love}
-                        alt="Love"
-                        width="32"
-                        className="opacity-0 animate-fade-in"
-                    />
-                )}
+                {/* Recipe content */}
+                <article
+                    aria-live="polite"
+                    className="p-3"
+                    style={{
+                        background: '#ffffff',
+                        borderTop: '1px solid #404040',
+                        borderLeft: '1px solid #404040',
+                        borderBottom: '1px solid #dfdfdf',
+                        borderRight: '1px solid #dfdfdf',
+                        margin: 4,
+                        minHeight: 120,
+                        maxHeight: 380,
+                        overflowY: 'auto',
+                        fontFamily: '"Tahoma","MS Sans Serif",sans-serif',
+                        fontSize: 11,
+                    }}
+                >
+                    <ReactMarkdown>{displayedText}</ReactMarkdown>
 
-                <div ref={bottomRef} className="mt-44" />
-            </article>
+                    {isFinished && (
+                        <div
+                            className="flex items-center gap-2 opacity-0 animate-fade-in"
+                            style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid #d4d0c8', fontSize: 11, color: '#008000' }}
+                        >
+                            <img src={love} alt="" width="20" />
+                            <span>Recipe complete — enjoy your meal!</span>
+                        </div>
+                    )}
+
+                    <div ref={bottomRef} />
+                </article>
+            </div>
         </section>
     )
 }
